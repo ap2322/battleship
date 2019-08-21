@@ -21,7 +21,6 @@ class CellTest < Minitest::Test
   end
 
   def test_if_empty?
-    # cruiser = Ship.new("Cruiser", 3)
     assert_equal true, @cell_1.empty?
   end
 
@@ -46,4 +45,40 @@ class CellTest < Minitest::Test
     assert_equal 2, cruiser.health
     assert_equal true, @cell_1.fired_upon?
   end
+
+  def test_render_period
+    assert_equal ".", @cell_1.render
+  end
+
+  def test_render_m
+    @cell_1.fired_upon
+    assert_equal "M", @cell_1.render
+  end
+
+  def test_render_s
+    cell_2 = Cell.new("C3")
+    cruiser = Ship.new("Cruiser", 3)
+    cell_2.place_ship(cruiser)
+    assert_equal ".", cell_2.render
+    assert_equal "S", cell_2.render(true)
+  end
+
+  def test_render_h
+    cell_2 = Cell.new("C3")
+    cruiser = Ship.new("Cruiser", 3)
+    cell_2.place_ship(cruiser)
+    cell_2.fired_upon
+    assert_equal "H", cell_2.render
+  end
+
+  def test_render_x
+    cell_2 = Cell.new("C3")
+    cruiser = Ship.new("Cruiser", 3)
+    cell_2.place_ship(cruiser)
+    cell_2.fired_upon
+    cruiser.hit
+    cruiser.hit
+    assert_equal "X", cell_2.render
+  end
+
 end
