@@ -84,10 +84,6 @@ class Board
     valid
   end
 
-
-
-
-
 end
 
 
