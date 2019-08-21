@@ -18,13 +18,28 @@ class Board
     @cells
   end
 
-  def valid_coordinate?(coordinate)
-    self.cells.values
-    cell_coordinate_array = self.cells.values.map do |cell|
-      cell.coordinate
+#If letters are all equal and numbers must be consecutive
+# If numbers are all equal and letters must be consecutive
+  def numbers_in_placement_same_letter(coordinates)
+    placement_nums = coordinates.map do |coord|
+      coord[1].to_i
     end
-    cell_coordinate_array.flatten.include?(coordinate)
+
   end
+
+
+  def valid_placement?(ship, coordinates)
+    ship.length == coordinates.length
+  end
+
+  def num_coordinates_possible(range, length)
+    valid_segment = []
+    range.each_cons(length) do |segment|
+      valid_segment << segment
+    end
+    valid_segment
+  end
+
 
 end
 

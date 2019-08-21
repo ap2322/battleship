@@ -28,15 +28,29 @@ class BoardTest < Minitest::Test
       "D1", "D2", "D3", "D4"
     ]
     assert_equal keys, @board.cells.keys
-
   end
 
-  def test_coordinates
-    assert_equal true, @board.valid_coordinate?("A1")
-    assert_equal true, @board.valid_coordinate?("D4")
-    assert_equal false, @board.valid_coordinate?("A5")
-    assert_equal false, @board.valid_coordinate?("E1")
-    assert_equal false, @board.valid_coordinate?("A22")
+
+  def test_valid_placement_length
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+
+    assert_equal false, @board.valid_placement?(cruiser, ["A1", "A2"])
+    assert_equal false, @board.valid_placement?(submarine, ["A2", "A3", "A4"])
+  end
+
+  def test_same_letter_make_array_of_numbers
+    assert_equal [1, 2, 3], @board.numbers_in_placement_same_letter(["A1", "A2", "A3"])
+  end
+
+  def test_possible_placements_same_letter
+    range = (1..4)
+    length = 3
+    length_2 = 2
+    expected = [[1, 2], [2, 3], [3, 4]]
+    assert_equal [[1, 2, 3], [2, 3, 4]], @board.num_coordinates_possible(range, length)
+    assert_equal expected, @board.num_coordinates_possible(range, length_2)
+
 
   end
 
