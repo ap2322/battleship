@@ -60,7 +60,9 @@ class BoardTest < Minitest::Test
 
   def test_same_letter_coords
     chosen_coords = ["A2", "A3", "A4"]
+    chosen_coords2 = ["A1", "B1", "C1"]
     assert_equal true, @board.same_letter_coords?(chosen_coords)
+    assert_equal false, @board.same_letter_coords?(chosen_coords2)
   end
 
   def test_valid_placement_same_letter_helper_methods
@@ -71,6 +73,56 @@ class BoardTest < Minitest::Test
 
     assert_equal true, @board.valid_placement?(cruiser, coordinates_c)
     assert_equal false, @board.valid_placement?(submarine, coordinates_s)
+  end
+
+  def test_same_number_coords
+    chosen_coords = ["A2", "B2", "C2"]
+    chosen_coords2 = ["B1", "B2", "B3"]
+
+    assert_equal true, @board.same_number_coords?(chosen_coords)
+    assert_equal false, @board.same_number_coords?(chosen_coords2)
+  end
+
+  def test_letters_in_placement_same_number
+    chosen_coords = ["A2", "B2", "C2"]
+    expected_ordinal_array = [65, 66, 67]
+
+    # assert_equal ["A", "B", "C"], @board.letters_in_placement_same_number(chosen_coords)
+    assert_equal expected_ordinal_array, @board.letters_in_placement_same_number(chosen_coords)
+  end
+
+  def test_possible_letter_coordinates_in_ordinal_values
+    range = (65..68)
+    length_1 = 3
+    length_2 = 2
+    expected_1 = [[65, 66, 67], [66, 67, 68]]
+    expected_2 = [[65, 66], [66, 67], [67, 68]]
+
+    assert_equal expected_1, @board.letter_coordinates_possible(range, length_1)
+    assert_equal expected_2, @board.letter_coordinates_possible(range, length_2)
+  end
+
+  def test_chosen_coord_letters_are_in_possible_coordinates
+    range = (65..68)
+    length = 3
+    chosen_coords = ["A2", "B2", "C2"]
+
+    assert_equal true, @board.same_num_letters_ok?(chosen_coords, range, length)
+  end
+
+  def test_valid_placement_same_number_and_helper_methods
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+    coordinates_c = ["B1", "C1", "D1"]
+    coordinates_s_ok = ["C4", "D4"]
+    coordinates_c_bad = ["C1", "D1", "E1"]
+    coordinates_s_bad = ["D5", "E5"]
+
+    assert_equal true, @board.valid_placement?(cruiser, coordinates_c)
+    assert_equal true, @board.valid_placement?(submarine, coordinates_s_ok)
+    assert_equal false, @board.valid_placement?(cruiser, coordinates_c_bad)
+    assert_equal false, @board.valid_placement?(submarine, coordinates_s_bad)
+
   end
 
 end

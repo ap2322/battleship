@@ -25,7 +25,7 @@ class Board
     end
     letters.uniq.length == 1
   end
-# If numbers are all equal and letters must be consecutive
+
   def numbers_in_placement_same_letter(coordinates)
     placement_nums = coordinates.map do |coord|
       coord[1].to_i
@@ -45,17 +45,40 @@ class Board
     self.numbers_in_placement_same_letter(coordinates))
   end
 
+  # If numbers are all equal and letters must be consecutive
+  def same_number_coords?(coordinates)
+    numbers = coordinates.map do |coord|
+      coord[1]
+    end
+    numbers.uniq.length == 1
+  end
 
+  def letters_in_placement_same_number(coordinates)
+    placement_letters = coordinates.map do |coord|
+      coord[0].ord
+    end
+  end
 
-  # if same letter, are numbers_in_placement_same_letter in num_coordinates_possible?
+  def same_num_letters_ok?(coordinates, range = (65..68), length)
+    self.letter_coordinates_possible(range , length).include?(
+    self.letters_in_placement_same_number(coordinates))
+  end
+
+  def letter_coordinates_possible(range, length)
+    valid_segment = []
+    range.each_cons(length) do |segment|
+      valid_segment << segment
+    end
+    valid_segment
+  end
 
   def valid_placement?(ship, coordinates)
     valid = false
     if ship.length == coordinates.length
       if self.same_letter_coords?(coordinates) && self.same_letter_num_ok?(coordinates, ship.length)
         valid = true
-      # elsif same_number_coords? && same_number_letters_ok?
-        #valid = true
+      elsif self.same_number_coords?(coordinates) && self.same_num_letters_ok?(coordinates, ship.length)
+        valid = true
       end
     end
     valid
