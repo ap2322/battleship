@@ -18,6 +18,13 @@ class Board
     @cells
   end
 
+  def valid_coordinate?(coordinate)
+    self.cells.values
+    cell_coordinate_array = self.cells.values.map do |cell|
+      cell.coordinate
+    end
+    cell_coordinate_array.flatten.include?(coordinate)
+  end
 
 end
 
