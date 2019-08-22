@@ -86,6 +86,10 @@ class Board
     end
   end
 
+  def overlap?
+
+  end
+
 
 end
 
