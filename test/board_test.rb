@@ -160,20 +160,16 @@ class BoardTest < Minitest::Test
     @board.place(cruiser, ["A1", "A2", "A3"])
     submarine = Ship.new("Submarine", 2)
     placement_good = ["B1", "B2"]
-    @board.place(submarine, placement_good)
 
     assert_equal false, @board.overlap?(placement_good)
-require 'pry'; binding.pry
     placement_bad  = ["A1", "B1"]
-
     assert_equal true, @board.overlap?(placement_bad)
   end
 
-  def test_invalid_placement_with_overlap
+  def test_valid_placement_with_overlap_method
     cruiser = Ship.new("Cruiser", 3)
     @board.place(cruiser, ["A1", "A2", "A3"])
     submarine = Ship.new("Submarine", 2)
-
     assert_equal false, @board.valid_placement?(submarine, ["A1", "B1"])
   end
 

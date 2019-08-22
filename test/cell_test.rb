@@ -6,6 +6,7 @@ require './lib/cell'
 class CellTest < Minitest::Test
   def setup
     @cell_1 = Cell.new("B4")
+
   end
 
   def test_it_exists
@@ -22,6 +23,11 @@ class CellTest < Minitest::Test
 
   def test_if_empty?
     assert_equal true, @cell_1.empty?
+    cell_2 = Cell.new("C3")
+    ship = Ship.new("thingy", 3)
+    cell_2.place_ship(ship)
+
+    assert_equal false, cell_2.empty?
   end
 
   def test_if_ship_is_placed
