@@ -8,6 +8,7 @@ class BoardTest < Minitest::Test
 
   def setup
     @board = Board.new
+
   end
 
   def test_it_exists
@@ -134,6 +135,42 @@ class BoardTest < Minitest::Test
     assert_equal true, @board.valid_placement?(submarine, ["A1", "A2"])
     assert_equal true, @board.valid_placement?(cruiser, ["B1", "C1", "D1"])
 
+  end
+
+  def test_it_can_place_a_ship
+    cruiser = Ship.new("Cruiser", 3)
+    cell_1 = @board.cells["A1"]
+    cell_2 = @board.cells["A2"]
+    cell_3 = @board.cells["A3"]
+    # require 'pry'; binding.pry
+    @board.place(cruiser, ["A1", "A2", "A3"])
+
+    assert_equal cruiser, @board.cells["A1"].ship
+    assert_equal cruiser, cell_2.ship
+    assert_equal cruiser, cell_3.ship
+
+    # test cell is still a Cell
+    assert_instance_of Cell, @board.cells["A1"]
+    # make sure cell.ship = true
+    assert_equal cruiser, @board.cells["A1"].ship
+  end
+
+  def test_overlap?
+    cruiser = Ship.new("Cruiser", 3)
+    @board.place(cruiser, ["A1", "A2", "A3"])
+    submarine = Ship.new("Submarine", 2)
+    placement_good = ["B1", "B2"]
+
+    assert_equal false, @board.overlap?(placement_good)
+    placement_bad  = ["A1", "B1"]
+    assert_equal true, @board.overlap?(placement_bad)
+  end
+
+  def test_valid_placement_with_overlap_method
+    cruiser = Ship.new("Cruiser", 3)
+    @board.place(cruiser, ["A1", "A2", "A3"])
+    submarine = Ship.new("Submarine", 2)
+    assert_equal false, @board.valid_placement?(submarine, ["A1", "B1"])
   end
 
 end
