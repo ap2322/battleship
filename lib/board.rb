@@ -1,11 +1,8 @@
 class Board
-  # attr_reader :cells
+  attr_reader :cells
 
   def initialize
     @cells = Hash.new
-  end
-
-  def cells
     keys = [
       "A1", "A2", "A3", "A4",
       "B1", "B2", "B3", "B4",
@@ -15,7 +12,6 @@ class Board
     keys.each do |key|
       @cells[key] = Cell.new([key])
     end
-    @cells
   end
 
 #If letters are all equal and numbers must be consecutive
@@ -83,6 +79,13 @@ class Board
     end
     valid
   end
+
+  def place(ship, coordinates)
+    coordinates.each do |coord|
+      self.cells[coord] = self.cells[coord].place_ship(ship)
+    end
+  end
+
 
 end
 
