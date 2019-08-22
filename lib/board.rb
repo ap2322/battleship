@@ -70,8 +70,10 @@ class Board
 
   def valid_placement?(ship, coordinates)
     return false if ship.length != coordinates.length
+    # return false if overlap?(coordinates)
 
     valid = false
+
     if same_letter_coords?(coordinates) &&
        same_letter_num_ok?(coordinates, ship.length)
       valid = true
@@ -85,13 +87,17 @@ class Board
   def place(ship, coordinates)
     if valid_placement?(ship, coordinates)
       coordinates.each do |coord|
-        cells[coord] = cells[coord].place_ship(ship)
+        cells[coord].place_ship(ship)
       end
-    end 
+    end
   end
 
-  def overlap?
-
+  def overlap?(coordinates)
+    overlap = false
+    coordinates.each do |coord|
+      overlap = @cells[coord].empty?
+    end
+    overlap
   end
 
 
