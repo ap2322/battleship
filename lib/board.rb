@@ -37,8 +37,8 @@ class Board
   end
 
   def same_letter_num_ok?(coordinates, range = (1..4), length)
-    self.num_coordinates_possible(range , length).include?(
-    self.numbers_in_placement_same_letter(coordinates))
+    num_coordinates_possible(range , length).include?(
+    numbers_in_placement_same_letter(coordinates))
   end
 
   # If numbers are all equal and letters must be consecutive
@@ -56,8 +56,8 @@ class Board
   end
 
   def same_num_letters_ok?(coordinates, range = (65..68), length)
-    self.letter_coordinates_possible(range , length).include?(
-    self.letters_in_placement_same_number(coordinates))
+    letter_coordinates_possible(range , length).include?(
+    letters_in_placement_same_number(coordinates))
   end
 
   def letter_coordinates_possible(range, length)
@@ -69,21 +69,25 @@ class Board
   end
 
   def valid_placement?(ship, coordinates)
+    return false if ship.length != coordinates.length
+
     valid = false
-    if ship.length == coordinates.length
-      if self.same_letter_coords?(coordinates) && self.same_letter_num_ok?(coordinates, ship.length)
-        valid = true
-      elsif self.same_number_coords?(coordinates) && self.same_num_letters_ok?(coordinates, ship.length)
-        valid = true
-      end
+    if same_letter_coords?(coordinates) &&
+       same_letter_num_ok?(coordinates, ship.length)
+      valid = true
+    elsif same_number_coords?(coordinates) &&
+          same_num_letters_ok?(coordinates, ship.length)
+      valid = true
     end
     valid
   end
 
   def place(ship, coordinates)
-    coordinates.each do |coord|
-      self.cells[coord] = self.cells[coord].place_ship(ship)
-    end
+    if valid_placement?(ship, coordinates)
+      coordinates.each do |coord|
+        cells[coord] = cells[coord].place_ship(ship)
+      end
+    end 
   end
 
   def overlap?

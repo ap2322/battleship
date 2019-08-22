@@ -158,8 +158,10 @@ class BoardTest < Minitest::Test
     @boards.place(submarine, placement_good)
 
     assert_equal false, @board.overlap?
+
     placement_bad  = ["A1", "B1"]
-    assert_equal false,
+
+    assert_equal false, @board.overlap?
   end
 
   # def test_valid_placement_overlap

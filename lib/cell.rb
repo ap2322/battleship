@@ -20,25 +20,22 @@ class Cell
     @cell_hit
   end
 
-  def fired_upon
-    if @ship
-      @ship.hit
-    end
+  def fire_upon
+    @ship.hit if @ship
     @cell_hit = true
   end
 
   def render(show=false)
-    if self.fired_upon? && @ship == nil
+    if fired_upon? && @ship == nil
       @render = "M"
-    elsif show == true && !self.empty?
+    elsif show == true && !empty?
       @render = "S"
-    elsif self.fired_upon? && @ship.sunk?
+    elsif fired_upon? && @ship.sunk?
       @render = "X"
-    elsif self.fired_upon? && !self.empty?
+    elsif fired_upon? && !empty?
       @render = "H"
-    else
-      @render = "."
     end
+    @render
   end
 
 end
