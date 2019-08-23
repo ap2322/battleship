@@ -103,11 +103,13 @@ class Board
     end
 
     not_empty_on_board.flatten!
-    # overlap = nil
-    # coordinates.each do |coord|
-    #   overlap = not_empty_on_board.flatten.include?(coord)
-    # end
-    # overlap
+    # loop through possible coordinates for placement
+    # make an array of [true, false] if they are included in the not_empty_on_board
+    on_board = coordinates.map do |coord|
+      not_empty_on_board.include?(coord)
+    end
+    # return true if your on_board array includes true 
+    on_board.include?(true)
   end
 
 
