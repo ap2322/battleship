@@ -8,8 +8,6 @@ class CellTest < Minitest::Test
     @cell_1 = Cell.new("B4")
     @cell_2 = Cell.new("C3")
     @ship = Ship.new("Cruiser", 3)
-
-
   end
 
   def test_it_exists
@@ -25,8 +23,9 @@ class CellTest < Minitest::Test
   end
 
   def test_if_empty?
+
     assert_equal true, @cell_1.empty?
-  
+
     @cell_2.place_ship(@ship)
 
     assert_equal false, @cell_2.empty?
@@ -85,5 +84,4 @@ class CellTest < Minitest::Test
 
     assert_equal "X", @cell_2.render
   end
-
 end
