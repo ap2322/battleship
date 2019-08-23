@@ -114,16 +114,24 @@ class Board
 
   def render(show=false)
     board_string1 = ""
-    binding.pry
-    @cells.each_cons(2) do |k1, k2|
-      if k2[0].ord > k1[0].ord
-        board_string.concat("\n")
+    board_stringA = ""
+    # make an array of just A cell.renders
+    @cells.each do |key, value|
+      if key[0] == "A"
+        board_stringA << value.render(true)
       end
     end
+
+    # @cells.each_cons(2) do |k1, k2|
+    #   if k2[0].ord > k1[0].ord
+    #     board_string1.concat("\n")
+    #   end
+    # end
     # @cells.each do |coord, cell|
     #   board_string.concat(cell.render(show))
     # end
-    board_string
+    # board_string1
+    board_stringA
   end
 
 
