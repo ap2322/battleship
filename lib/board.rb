@@ -108,10 +108,34 @@ class Board
     on_board = coordinates.map do |coord|
       not_empty_on_board.include?(coord)
     end
-    # return true if your on_board array includes true 
+    # return true if your on_board array includes true
     on_board.include?(true)
   end
 
+  def render(show = false)
+    #go through @cells
+    # row is key[0]
+    board_string = ""
+    @cells.each do |coord, cell|
+      board_string << cell.render(true)
+    end
+    board_string
+    key_string_arr = @cells.keys.map { |key| key[0].ord}
+    top_string_arr = @cells.keys.map {|key| key[1]}.uniq
+
+    top_string_arr.join(" ")
+
+    row_render = " "
+
+    row_render = key_string_arr.each_with_index do |key, index|
+      if key != key_string_arr[index+1]
+        row_render << "\n #{key.chr}"
+      end
+      # row_render << board_string[index]
+    end
+    row_render
+
+  end
 
 end
 

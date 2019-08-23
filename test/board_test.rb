@@ -182,4 +182,15 @@ class BoardTest < Minitest::Test
 
   end
 
+  def test_render_board
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+    expected_board_string = " 1 2 3 4 \n" +
+                            "A . . . . \n" +
+                            "B . . . . \n" +
+                            "C . . . . \n" +
+                            "D . . . . \n"
+
+    assert_equal expected_board_string, @board.render(true)
+  end
+
 end
