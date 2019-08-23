@@ -108,8 +108,22 @@ class Board
     on_board = coordinates.map do |coord|
       not_empty_on_board.include?(coord)
     end
-    # return true if your on_board array includes true 
+    # return true if your on_board array includes true
     on_board.include?(true)
+  end
+
+  def render(show=false)
+    board_string1 = ""
+    binding.pry
+    @cells.each_cons(2) do |k1, k2|
+      if k2[0].ord > k1[0].ord
+        board_string.concat("\n")
+      end
+    end
+    # @cells.each do |coord, cell|
+    #   board_string.concat(cell.render(show))
+    # end
+    board_string
   end
 
 
