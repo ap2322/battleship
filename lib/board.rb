@@ -105,6 +105,7 @@ class Board
     not_empty_on_board.flatten!
     # loop through possible coordinates for placement
     # make an array of [true, false] if they are included in the not_empty_on_board
+    # TODO use a union | or intersection & method to compare arrays
     on_board = coordinates.map do |coord|
       not_empty_on_board.include?(coord)
     end
@@ -113,14 +114,37 @@ class Board
   end
 
   def render(show=false)
-    board_string1 = ""
-    board_stringA = ""
-    # make an array of just A cell.renders
-    @cells.each do |key, value|
-      if key[0] == "A"
-        board_stringA << value.render(true)
+    # map cells.values.render to an array
+    cell_render_array = @cells.values.map {|cell| cell.render(true)}
+    key_letter_array = @cells.keys.map {|key| key[0].ord }
+    top_numbers_array = @cells.keys.map {|key| key[1]}
+    top_numbers_array.uniq!
+    str_of_rows = " "
+
+    top_numbers_array.each { |num| str_of_rows += "#{num} "}
+
+
+    key_letter_array.each_with_index do |key, index|
+      if key_letter_array[index-1] != key_letter_array[index]
+        str_of_rows.concat("\n #{key.chr} ")
       end
+      str_of_rows += cell_render_array[index] + " "
+      # binding.pry
+
     end
+
+    str_of_rows
+
+
+
+    # board_string1 = " "
+    # board_stringA = ""
+    # # make an array of just A cell.renders
+    # @cells.each do |key, value|
+    #   if key[0] == "A"
+    #     board_stringA << value.render(true)
+    #   end
+    # end
 
     # @cells.each_cons(2) do |k1, k2|
     #   if k2[0].ord > k1[0].ord
@@ -130,8 +154,7 @@ class Board
     # @cells.each do |coord, cell|
     #   board_string.concat(cell.render(show))
     # end
-    # board_string1
-    board_stringA
+    # board_stringA
   end
 
 
