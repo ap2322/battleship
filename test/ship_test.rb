@@ -25,17 +25,21 @@ class ShipTest < Minitest::Test
 
   def  test_length_stay_constant
     @cruiser.hit
+
     assert_equal 3, @cruiser.length
   end
 
   def test_it_takes_hits
     @cruiser.hit
+
     assert_equal 2, @cruiser.health
   end
 
   def test_it_has_sunk
     @cruiser.hit
+
     assert_equal false, @cruiser.sunk?
+    
     @cruiser.hit
     @cruiser.hit
 

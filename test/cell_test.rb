@@ -6,7 +6,8 @@ require './lib/cell'
 class CellTest < Minitest::Test
   def setup
     @cell_1 = Cell.new("B4")
-
+    @cell_2 = Cell.new("C3")
+    @ship = Ship.new("Cruiser", 3)
   end
 
   def test_it_exists
@@ -22,33 +23,32 @@ class CellTest < Minitest::Test
   end
 
   def test_if_empty?
-    assert_equal true, @cell_1.empty?
-    cell_2 = Cell.new("C3")
-    ship = Ship.new("thingy", 3)
-    cell_2.place_ship(ship)
 
-    assert_equal false, cell_2.empty?
+    assert_equal true, @cell_1.empty?
+
+    @cell_2.place_ship(@ship)
+
+    assert_equal false, @cell_2.empty?
   end
 
   def test_if_ship_is_placed
-    cruiser = Ship.new("Cruiser", 3)
-    @cell_1.place_ship(cruiser)
+    @cell_1.place_ship(@ship)
+
     assert_instance_of Ship, @cell_1.ship
     assert_equal false, @cell_1.empty?
   end
 
   def test_if_fired_upon
-    cruiser = Ship.new("Cruiser", 3)
-    @cell_1.place_ship(cruiser)
+    @cell_1.place_ship(@ship)
+
     assert_equal false, @cell_1.fired_upon?
   end
 
   def test_if_firing_hits_anything
-    cruiser = Ship.new("Cruiser", 3)
-    @cell_1.place_ship(cruiser)
+    @cell_1.place_ship(@ship)
     @cell_1.fire_upon
 
-    assert_equal 2, cruiser.health
+    assert_equal 2, @ship.health
     assert_equal true, @cell_1.fired_upon?
   end
 
@@ -58,35 +58,30 @@ class CellTest < Minitest::Test
 
   def test_render_m
     @cell_1.fire_upon
+
     assert_equal "M", @cell_1.render
   end
 
   def test_render_s
-    cell_2 = Cell.new("C3")
-    cruiser = Ship.new("Cruiser", 3)
-    cell_2.place_ship(cruiser)
-    # require 'pry'; binding.pry
-    assert_equal ".", cell_2.render
-    assert_equal "S", cell_2.render(true)
+    @cell_2.place_ship(@ship)
+
+    assert_equal ".", @cell_2.render
+    assert_equal "S", @cell_2.render(true)
   end
 
   def test_render_h
-    cell_2 = Cell.new("C3")
-    cruiser = Ship.new("Cruiser", 3)
-    cell_2.place_ship(cruiser)
-    cell_2.fire_upon
+    @cell_2.place_ship(@ship)
+    @cell_2.fire_upon
 
-    assert_equal "H", cell_2.render
+    assert_equal "H", @cell_2.render
   end
 
   def test_render_x
-    cell_2 = Cell.new("C3")
-    cruiser = Ship.new("Cruiser", 3)
-    cell_2.place_ship(cruiser)
-    cell_2.fire_upon
-    cruiser.hit
-    cruiser.hit
-    assert_equal "X", cell_2.render
-  end
+    @cell_2.place_ship(@ship)
+    @cell_2.fire_upon
+    @ship.hit
+    @ship.hit
 
+    assert_equal "X", @cell_2.render
+  end
 end
