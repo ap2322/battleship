@@ -11,9 +11,6 @@ class BoardTest < Minitest::Test
     @board = Board.new
     @cruiser = Ship.new("Cruiser", 3)
     @submarine = Ship.new("Submarine", 2)
-
-
-
   end
 
   def test_it_exists
@@ -180,49 +177,6 @@ class BoardTest < Minitest::Test
     assert_equal false, @board.valid_placement?(@submarine, ["A1", "B1"])
     assert_equal true, @board.valid_placement?(@submarine, ["B1", "B2"])
 
-  end
-
-  def test_top_string_render_board
-    expected_top_row = " 1 2 3 4 "
-
-    assert_equal expected_top_row, @board.top_row_render
-  end
-
-  def test_render_board
-    @board.place(@cruiser, ["A1", "A2", "A3"])
-    expected_board_string = " 1 2 3 4 \n" +
-                            "A . . . . \n" +
-                            "B . . . . \n" +
-                            "C . . . . \n" +
-                            "D . . . . \n"
-
-    expected_show_true = " 1 2 3 4 \n" +
-                          "A S S S . \n" +
-                          "B . . . . \n" +
-                          "C . . . . \n" +
-                          "D . . . . \n"
-
-    assert_equal expected_board_string, @board.render
-    assert_equal expected_show_true, @board.render(true)
-  end
-
-  def test_hits_misses_sunk
-    @board.place(@cruiser, ["A1", "A2", "A3"])
-    @board.place(@submarine, ["C1", "D1"])
-    @board.cells["A1"].fire_upon
-    @board.cells["B4"].fire_upon
-    @board.cells["C1"].fire_upon
-    @board.cells["D1"].fire_upon
-
-
-
-    expected_board_with_hits =  " 1 2 3 4 \n" +
-                                "A H . . . \n" +
-                                "B . . . M \n" +
-                                "C X . . . \n" +
-                                "D X . . . \n"
-
-    assert_equal expected_board_with_hits, @board.render
   end
 
 end
