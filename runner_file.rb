@@ -2,6 +2,7 @@ require './lib/ship'
 require './lib/cell'
 require './lib/board'
 require './lib/computer'
+require './lib/player'
 require 'pry'
 
 def start
@@ -19,7 +20,6 @@ def start
 end
 
 def make_board_and_ships
-
   @board_comp = Board.new
   @board_user = Board.new
   @cruiser = Ship.new("Cruiser", 3)
@@ -30,13 +30,26 @@ end
 def computer_starts
   @comp1 = Computer.new
   @comp1.place_all_ships(@board_comp, @all_ships)
-binding.pry
 end
 
 def player_starts
+  @player = Player.new
   puts "You now need to lay out your two ships."
   puts "The Cruiser is three units long and the Submarine is two units long."
   puts @board_user.render
+  puts "Enter the squares for the cruiser (3 spaces):"
+  print ">"
+  player_placement = gets.chomp
+  placement =  @player.string_placement_to_array(player_placement)
+  @player.place_on_board(@cruiser, @board_user, placement)
+  puts @board_user.render(true)
+  puts "Enter the squares for the submarine (2 spaces):"
+  print ">"
+  player_placement = gets.chomp
+  placement =  @player.string_placement_to_array(player_placement)
+  @player.place_on_board(@submarine, @board_user, placement)
+  puts @board_user.render(true)
+
 end
 
 start
