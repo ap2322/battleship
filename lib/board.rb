@@ -99,6 +99,7 @@ class Board
   end
 
   def overlap?(coordinates)
+    # TODO: Add more testing for overlap?
     # look through cells that are not empty and make array
     not_empty_on_board = []
     cells.values.each do |cell|
@@ -117,20 +118,24 @@ class Board
     on_board.include?(true)
   end
 
-  def render(show = false)
-    # Todo: break into helper methods top_row and content_rows
+  def top_row_render
     board_string = ""
-    range = @cells.keys.map {|num| num[1]}
+    range = @cells.keys.map {|coord| coord[1]}
     range.uniq!
     range.each do |num|
       board_string << " #{num}"
     end
-
     board_string << " "
+  end
+
+  def render(show = false)
+    # Todo: break into helper methods top_row and content_rows
+    board_string = top_row_render
 
     @cells.each_with_index do |(coord, cell), index|
-      if @cells.keys[index][0].ord != @cells.keys[index-1][0].ord
-          board_string << "\n#{coord.chr} "
+      if @cells.keys[index][0] != @cells.keys[index-1][0]
+          board_string << "\n#{coord[0]} "
+          # binding.pry
       end
       board_string << cell.render(show) + " "
     end

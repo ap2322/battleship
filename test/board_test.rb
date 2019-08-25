@@ -182,6 +182,12 @@ class BoardTest < Minitest::Test
 
   end
 
+  def test_top_string_render_board
+    expected_top_row = " 1 2 3 4 "
+
+    assert_equal expected_top_row, @board.top_row_render
+  end
+
   def test_render_board
     @board.place(@cruiser, ["A1", "A2", "A3"])
     expected_board_string = " 1 2 3 4 \n" +
