@@ -2,7 +2,11 @@ class Board
   attr_reader :cells
 
   def initialize
-    @cells = Hash.new
+    @cells = make_board
+  end
+
+  def make_board
+    cells_hash = Hash.new
     keys = [
       "A1", "A2", "A3", "A4",
       "B1", "B2", "B3", "B4",
@@ -10,8 +14,9 @@ class Board
       "D1", "D2", "D3", "D4",
     ]
     keys.each do |key|
-      @cells[key] = Cell.new([key])
+      cells_hash[key] = Cell.new([key])
     end
+    cells_hash
   end
 
 #If letters are all equal and numbers must be consecutive
@@ -94,6 +99,7 @@ class Board
   end
 
   def overlap?(coordinates)
+    # TODO: Add more testing for overlap?
     # look through cells that are not empty and make array
     not_empty_on_board = []
     cells.values.each do |cell|
@@ -108,11 +114,36 @@ class Board
     on_board = coordinates.map do |coord|
       not_empty_on_board.include?(coord)
     end
-    # return true if your on_board array includes true 
+    # return true if your on_board array includes true
     on_board.include?(true)
   end
 
+  def top_row_render
+    board_string = ""
+    range = @cells.keys.map {|coord| coord[1]}
+    range.uniq!
+    range.each do |num|
+      board_string << " #{num}"
+    end
+    board_string << " "
+  end
 
+  def render(show = false)
+    # Todo: break into helper methods top_row and content_rows
+    board_string = top_row_render
+
+    @cells.each_with_index do |(coord, cell), index|
+      if @cells.keys[index][0] != @cells.keys[index-1][0]
+          board_string << "\n#{coord[0]} "
+          # binding.pry
+      end
+      board_string << cell.render(show) + " "
+    end
+
+    board_string << "\n"
+  end
+
+  # Alternate method is use the board size 4x4 and use % to determine when to add "\n"
 end
 
 
