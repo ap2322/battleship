@@ -2,6 +2,10 @@ class Board
   attr_reader :cells
 
   def initialize
+    @cells = make_board
+  end
+
+  def make_board
     @cells = Hash.new
     keys = [
       "A1", "A2", "A3", "A4",
@@ -12,6 +16,7 @@ class Board
     keys.each do |key|
       @cells[key] = Cell.new([key])
     end
+    @cells
   end
 
 #If letters are all equal and numbers must be consecutive
@@ -114,7 +119,7 @@ class Board
 
   def render(show = false)
     board_string = ""
-    range = @cells.keys.map {|num| num[1].to_i}
+    range = @cells.keys.map {|num| num[1]}
     range.uniq!
     range.each do |num|
       board_string << " #{num}"
@@ -123,7 +128,6 @@ class Board
     board_string << " "
 
     @cells.each_with_index do |(coord, cell), index|
-      # how do I get a first row of " 1 2 3.. length of numbers in keys"
       if @cells.keys[index][0].ord != @cells.keys[index-1][0].ord
           board_string << "\n#{coord.chr} "
       end
