@@ -190,7 +190,14 @@ class BoardTest < Minitest::Test
                             "C . . . . \n" +
                             "D . . . . \n"
 
-    assert_equal expected_board_string, @board.render(true)
+    expected_show_true = " 1 2 3 4 \n" +
+                            "A S S S . \n" +
+                            "B . . . . \n" +
+                            "C . . . . \n" +
+                            "D . . . . \n"
+
+    assert_equal expected_board_string, @board.render
+    assert_equal expected_show_true, @board.render(true)
   end
 
 end

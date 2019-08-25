@@ -113,36 +113,24 @@ class Board
   end
 
   def render(show = false)
-    # TODO hash.each_with_index { |(key,value),index| ... }
-    # Redo the below with hash.each_with_index
-
-
-    #go through @cells
-    # row is key[0]
     board_string = ""
-    @cells.each_with_index do |(coord, cell), index|
-      if @cells.keys[index][0].ord != @cells.keys[index-1][0].ord
-          board_string << "\n #{coord.chr} "
-      end
-      board_string << cell.render(true) + " "
+    range = @cells.keys.map {|num| num[1].to_i}
+    range.uniq!
+    range.each do |num|
+      board_string << " #{num}"
     end
 
-    board_string
-    # key_string_arr = @cells.keys.map { |key| key[0].ord}
-    # top_string_arr = @cells.keys.map {|key| key[1]}.uniq
-    #
-    # top_string_arr.join(" ")
-    #
-    # row_render = " "
-    #
-    # row_render = key_string_arr.each_with_index do |key, index|
-    #   if key != key_string_arr[index+1]
-    #     row_render << "\n #{key.chr}"
-    #   end
-    #   # row_render << board_string[index]
-    # end
-    # row_render
+    board_string << " "
 
+    @cells.each_with_index do |(coord, cell), index|
+      # how do I get a first row of " 1 2 3.. length of numbers in keys"
+      if @cells.keys[index][0].ord != @cells.keys[index-1][0].ord
+          board_string << "\n#{coord.chr} "
+      end
+      board_string << cell.render(show) + " "
+    end
+
+    board_string << "\n"
   end
 
 end
