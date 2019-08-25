@@ -120,26 +120,28 @@ class Board
     #go through @cells
     # row is key[0]
     board_string = ""
-    @cells.each do |coord, cell|
-      board_string << cell.render(true)
+    @cells.each_with_index do |(coord, cell), index|
+      if @cells.keys[index][0].ord != @cells.keys[index-1][0].ord
+          board_string << "\n #{coord.chr} "
+      end
+      board_string << cell.render(true) + " "
     end
-    binding.pry
 
     board_string
-    key_string_arr = @cells.keys.map { |key| key[0].ord}
-    top_string_arr = @cells.keys.map {|key| key[1]}.uniq
-
-    top_string_arr.join(" ")
-
-    row_render = " "
-
-    row_render = key_string_arr.each_with_index do |key, index|
-      if key != key_string_arr[index+1]
-        row_render << "\n #{key.chr}"
-      end
-      # row_render << board_string[index]
-    end
-    row_render
+    # key_string_arr = @cells.keys.map { |key| key[0].ord}
+    # top_string_arr = @cells.keys.map {|key| key[1]}.uniq
+    #
+    # top_string_arr.join(" ")
+    #
+    # row_render = " "
+    #
+    # row_render = key_string_arr.each_with_index do |key, index|
+    #   if key != key_string_arr[index+1]
+    #     row_render << "\n #{key.chr}"
+    #   end
+    #   # row_render << board_string[index]
+    # end
+    # row_render
 
   end
 
