@@ -6,7 +6,7 @@ class Board
   end
 
   def make_board
-    @cells = Hash.new
+    cells_hash = Hash.new
     keys = [
       "A1", "A2", "A3", "A4",
       "B1", "B2", "B3", "B4",
@@ -14,9 +14,9 @@ class Board
       "D1", "D2", "D3", "D4",
     ]
     keys.each do |key|
-      @cells[key] = Cell.new([key])
+      cells_hash[key] = Cell.new([key])
     end
-    @cells
+    cells_hash
   end
 
 #If letters are all equal and numbers must be consecutive
@@ -118,6 +118,7 @@ class Board
   end
 
   def render(show = false)
+    # Todo: break into helper methods top_row and content_rows
     board_string = ""
     range = @cells.keys.map {|num| num[1]}
     range.uniq!
@@ -137,6 +138,7 @@ class Board
     board_string << "\n"
   end
 
+  # Alternate method is use the board size 4x4 and use % to determine when to add "\n"
 end
 
 
