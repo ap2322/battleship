@@ -113,12 +113,18 @@ class Board
   end
 
   def render(show = false)
+    # TODO hash.each_with_index { |(key,value),index| ... }
+    # Redo the below with hash.each_with_index
+
+
     #go through @cells
     # row is key[0]
     board_string = ""
     @cells.each do |coord, cell|
       board_string << cell.render(true)
     end
+    binding.pry
+
     board_string
     key_string_arr = @cells.keys.map { |key| key[0].ord}
     top_string_arr = @cells.keys.map {|key| key[1]}.uniq
