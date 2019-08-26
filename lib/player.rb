@@ -25,11 +25,11 @@ class Player
   end
 
   def shot_on_board(shot, board)
-    if board.cells.keys.include?(shot)
+    if !board.cells.keys.include?(shot)
       puts "Please enter a valid coordinate:"
-      return true
+      return false
     end
-    false
+    true
   end
 
   def shot_already_taken?(shot)
@@ -47,7 +47,7 @@ class Player
     end
     @shots_taken << shot
     board.cells[shot].fire_upon
-    binding.pry
+    # binding.pry
   end
 
 
