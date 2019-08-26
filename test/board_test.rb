@@ -179,4 +179,28 @@ class BoardTest < Minitest::Test
 
   end
 
+  def test_top_string_render_board
+  expected_top_row = " 1 2 3 4 "
+
+  assert_equal expected_top_row, @board.top_row_render
+end
+
+def test_render_board
+  @board.place(@cruiser, ["A1", "A2", "A3"])
+  expected_board_string = " 1 2 3 4 \n" +
+                          "A . . . . \n" +
+                          "B . . . . \n" +
+                          "C . . . . \n" +
+                          "D . . . . \n"
+
+  expected_show_true = " 1 2 3 4 \n" +
+                        "A S S S . \n" +
+                        "B . . . . \n" +
+                        "C . . . . \n" +
+                        "D . . . . \n"
+
+  assert_equal expected_board_string, @board.render
+  assert_equal expected_show_true, @board.render(true)
+end
+
 end
