@@ -55,10 +55,21 @@ def player_starts
   puts @board_player.render(true)
 
   # start turns
-  turns
+  take_turns
 end
 
-def turns
+def ships_all_sunk(ships)
+  # helper ships_all_sunk(ships) method, returns boolean
+end
+
+def take_turns
+  until ships_all_sunk(@all_ships_c) || ships_all_sunk(@all_ships_p)
+    turn
+  end
+  game_over_sequence
+end
+
+def turn
   # TODO add until loop that repeats <show board> <take shots> <show result>
   # until either the computer's ships are sunk or the player's ships are sunk
   puts "=============COMPUTER BOARD============="
@@ -89,6 +100,8 @@ def player_results(player_shot)
     puts "Your shot at #{player_shot} was a hit."
   end
 end
+# make one results(shot, board)
+#
 
 def comp_results(comp_shot)
   if @board_player.cells[comp_shot].render == "X"

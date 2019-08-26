@@ -14,7 +14,7 @@ class Board
       "D1", "D2", "D3", "D4",
     ]
     keys.each do |key|
-      cells_hash[key] = Cell.new([key])
+      cells_hash[key] = Cell.new(key)
     end
     cells_hash
   end
@@ -129,7 +129,6 @@ class Board
   end
 
   def render(show = false)
-    # Todo: break into helper methods top_row and content_rows
     board_string = top_row_render
 
     @cells.each_with_index do |(coord, cell), index|
