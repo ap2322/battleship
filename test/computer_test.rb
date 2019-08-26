@@ -3,8 +3,9 @@ require 'minitest/pride'
 require './lib/ship'
 require './lib/cell'
 require './lib/board'
-require './lib/runner_file'
+# require './lib/runner_file'
 require './lib/computer'
+require './lib/player'
 require 'pry'
 
 class ComputerTest < Minitest::Test
@@ -14,6 +15,8 @@ class ComputerTest < Minitest::Test
     @board = Board.new
     @cruiser = Ship.new("Cruiser", 3)
     @submarine = Ship.new("Submarine", 2)
+    @player = Player.new
+    binding.pry
   end
 
   def test_it_exists

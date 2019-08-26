@@ -1,7 +1,7 @@
 class Player
 
   def initialize
-
+    # @shots_taken = []
   end
 
   def string_placement_to_array(placement_string)
@@ -24,10 +24,22 @@ class Player
 
   end
 
-  def place_all_ships(board, ships)
-    ships.each do |ship|
-      place_on_board(ship, board)
+  def take_shot(shot, board)
+    until board.cells.keys.include?(shot) do
+      puts "Please enter a valid coordinate:"
+      print ">"
+      shot = gets.chomp
     end
+    # if @shots_taken.include?(shot)
+    #   puts "You've already fired there. Please pick a different coordinate: "
+    #   print ">"
+    #   shot = gets.chomp
+    #
+    #   take_shot(shot, board)
+    # end
+    # @shots_taken << shot
+    board.cells[shot].fire_upon
+
   end
 
 

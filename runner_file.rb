@@ -50,6 +50,24 @@ def player_starts
   @player.place_on_board(@submarine, @board_user, placement)
   puts @board_user.render(true)
 
+  # start turns
+  turns
+end
+
+def turns
+  # TODO add until loop that repeats <show board> <take shots> <show result>
+  # until either the computer's ships are sunk or the player's ships are sunk
+  puts "=============COMPUTER BOARD============="
+  puts @board_comp.render
+  puts "==============PLAYER BOARD=============="
+  puts @board_user.render(true)
+  puts "Enter the coordinate for your shot:"
+  print ">"
+  shot = gets.chomp
+  @player.take_shot(shot, @board_comp)
+  # computer takes shot
+  @comp1.take_shot(@board_user)
+  # puts results of turn
 end
 
 start
