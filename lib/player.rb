@@ -1,7 +1,7 @@
 class Player
 
   def initialize
-    # @shots_taken = []
+    @shots_taken = []
   end
 
   def string_placement_to_array(placement_string)
@@ -24,22 +24,30 @@ class Player
 
   end
 
-  def take_shot(shot, board)
-    until board.cells.keys.include?(shot) do
+  def shot_on_board(shot, board)
+    if board.cells.keys.include?(shot)
       puts "Please enter a valid coordinate:"
+      return true
+    end
+    false
+  end
+
+  def shot_already_taken?(shot)
+    if @shots_taken.include?(shot)
+      puts "You've already fired there. Please pick a different coordinate: "
+      return true
+    end
+    false
+  end
+
+  def take_shot(shot, board)
+    until shot_on_board(shot, board) && !shot_already_taken?(shot) do
       print ">"
       shot = gets.chomp
     end
-    # if @shots_taken.include?(shot)
-    #   puts "You've already fired there. Please pick a different coordinate: "
-    #   print ">"
-    #   shot = gets.chomp
-    #
-    #   take_shot(shot, board)
-    # end
-    # @shots_taken << shot
+    @shots_taken << shot
     board.cells[shot].fire_upon
-
+    binding.pry
   end
 
 
