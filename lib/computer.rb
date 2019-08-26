@@ -1,7 +1,7 @@
 class Computer
 
   def initialize
-
+    @shots_taken = []
   end
 
 # Place a Ship and a Cruiser in random places on the board
@@ -29,9 +29,21 @@ class Computer
   def place_all_ships(board, ships)
     ships.each do |ship|
       place_on_board(ship, board)
-
     end
     "I have laid out my ships on the grid."
+  end
+
+  def generate_shot(board)
+    comp_shot = board.cells.keys.sample
+    while @shots_taken.include?(comp_shot)
+      comp_shot = board.cells.keys.sample
+    end
+    @shots_taken << comp_shot
+    comp_shot
+  end
+
+  def take_shot(board)
+    board.cells[generate_shot(board)].fire_upon
   end
 
 end
