@@ -1,4 +1,5 @@
 class Computer
+  attr_reader :shots_taken
 
   def initialize
     @shots_taken = []
