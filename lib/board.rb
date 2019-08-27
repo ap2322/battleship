@@ -90,6 +90,8 @@ class Board
     valid
   end
 
+  
+
   def place(ship, coordinates)
     if valid_placement?(ship, coordinates)
       coordinates.each do |coord|
@@ -119,7 +121,7 @@ class Board
   end
 
   def top_row_render
-    board_string = " "
+    board_string = ""
     range = @cells.keys.map {|coord| coord[1]}
     range.uniq!
     range.each do |num|
