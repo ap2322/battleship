@@ -28,7 +28,7 @@ class Cell
   def render(show=false)
     if fired_upon? && @ship == nil
       @render = "M"
-    elsif show == true && !empty?
+    elsif show == true && !empty? && !fired_upon?
       @render = "S"
     elsif fired_upon? && @ship.sunk?
       @render = "X"
