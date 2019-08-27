@@ -23,7 +23,7 @@ class BoardTest < Minitest::Test
     assert_instance_of Cell, @board.cells.values[0]
   end
 
-  def test_make_cells
+  def test_make_board
     keys = [
       "A1", "A2", "A3", "A4",
       "B1", "B2", "B3", "B4",
@@ -34,10 +34,7 @@ class BoardTest < Minitest::Test
     assert_equal keys, @board.cells.keys
   end
 
-
   def test_valid_placement_length
-    # cruiser = Ship.new("Cruiser", 3)
-    # submarine = Ship.new("Submarine", 2)
 
     assert_equal false, @board.valid_placement?(@cruiser, ["A1", "A2"])
     assert_equal false, @board.valid_placement?(@submarine, ["A2", "A3", "A4"])
@@ -52,6 +49,7 @@ class BoardTest < Minitest::Test
     length = 3
     length_2 = 2
     expected = [[1, 2], [2, 3], [3, 4]]
+
     assert_equal [[1, 2, 3], [2, 3, 4]], @board.num_coordinates_possible(range, length)
     assert_equal expected, @board.num_coordinates_possible(range, length_2)
   end
@@ -60,19 +58,19 @@ class BoardTest < Minitest::Test
     range = (1..4)
     length = 3
     chosen_coords = ["A2", "A3", "A4"]
+
     assert_equal true, @board.same_letter_num_ok?(chosen_coords, range, length)
   end
 
   def test_same_letter_coords
     chosen_coords = ["A2", "A3", "A4"]
     chosen_coords2 = ["A1", "B1", "C1"]
+
     assert_equal true, @board.same_letter_coords?(chosen_coords)
     assert_equal false, @board.same_letter_coords?(chosen_coords2)
   end
 
   def test_valid_placement_same_letter_helper_methods
-    # cruiser = Ship.new("Cruiser", 3)
-    # submarine = Ship.new("Submarine", 2)
     coordinates_c = ["B1", "B2", "B3"]
     coordinates_s = ["B4", "B5"]
 
@@ -92,7 +90,6 @@ class BoardTest < Minitest::Test
     chosen_coords = ["A2", "B2", "C2"]
     expected_ordinal_array = [65, 66, 67]
 
-    # assert_equal ["A", "B", "C"], @board.letters_in_placement_same_number(chosen_coords)
     assert_equal expected_ordinal_array, @board.letters_in_placement_same_number(chosen_coords)
   end
 
@@ -142,11 +139,10 @@ class BoardTest < Minitest::Test
   end
 
   def test_it_can_place_a_ship
-    # cruiser = Ship.new("Cruiser", 3)
     cell_1 = @board.cells["A1"]
     cell_2 = @board.cells["A2"]
     cell_3 = @board.cells["A3"]
-    # require 'pry'; binding.pry
+
     @board.place(@cruiser, ["A1", "A2", "A3"])
 
     assert_equal @cruiser, @board.cells["A1"].ship
@@ -160,20 +156,18 @@ class BoardTest < Minitest::Test
   end
 
   def test_overlap?
-    # cruiser = Ship.new("Cruiser", 3)
     @board.place(@cruiser, ["A1", "A2", "A3"])
-    # submarine = Ship.new("Submarine", 2)
+
     placement_good = ["B1", "B2"]
+    placement_bad  = ["A1", "B1"]
 
     assert_equal false, @board.overlap?(placement_good)
-    placement_bad  = ["A1", "B1"]
     assert_equal true, @board.overlap?(placement_bad)
   end
 
   def test_valid_placement_with_overlap_method
-    # cruiser = Ship.new("Cruiser", 3)
     @board.place(@cruiser, ["A1", "A2", "A3"])
-    # submarine = Ship.new("Submarine", 2)
+
     assert_equal false, @board.valid_placement?(@submarine, ["A1", "B1"])
     assert_equal true, @board.valid_placement?(@submarine, ["B1", "B2"])
 
@@ -183,24 +177,23 @@ class BoardTest < Minitest::Test
   expected_top_row = "  1 2 3 4 "
 
   assert_equal expected_top_row, @board.top_row_render
-end
+  end
 
-def test_render_board
-  @board.place(@cruiser, ["A1", "A2", "A3"])
-  expected_board_string = "  1 2 3 4 \n" +
+  def test_render_board
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+    expected_board_string = "  1 2 3 4 \n" +
                           "A . . . . \n" +
                           "B . . . . \n" +
                           "C . . . . \n" +
                           "D . . . . \n"
 
-  expected_show_true = "  1 2 3 4 \n" +
+    expected_show_true = "  1 2 3 4 \n" +
                         "A S S S . \n" +
                         "B . . . . \n" +
                         "C . . . . \n" +
                         "D . . . . \n"
 
-  assert_equal expected_board_string, @board.render
-  assert_equal expected_show_true, @board.render(true)
-end
-
+    assert_equal expected_board_string, @board.render
+    assert_equal expected_show_true, @board.render(true)
+  end
 end

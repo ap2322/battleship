@@ -90,6 +90,8 @@ class Board
     valid
   end
 
+
+
   def place(ship, coordinates)
     if valid_placement?(ship, coordinates)
       coordinates.each do |coord|
@@ -99,7 +101,6 @@ class Board
   end
 
   def overlap?(coordinates)
-    # TODO: Add more testing for overlap?
     # look through cells that are not empty and make array
     not_empty_on_board = []
     cells.values.each do |cell|
