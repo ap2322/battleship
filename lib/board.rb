@@ -90,7 +90,7 @@ class Board
     valid
   end
 
-  
+
 
   def place(ship, coordinates)
     if valid_placement?(ship, coordinates)
@@ -101,7 +101,6 @@ class Board
   end
 
   def overlap?(coordinates)
-    # TODO: Add more testing for overlap?
     # look through cells that are not empty and make array
     not_empty_on_board = []
     cells.values.each do |cell|
@@ -121,7 +120,7 @@ class Board
   end
 
   def top_row_render
-    board_string = ""
+    board_string = " "
     range = @cells.keys.map {|coord| coord[1]}
     range.uniq!
     range.each do |num|
