@@ -44,15 +44,13 @@ def player_starts
   puts @board_player.render
   puts "Enter the squares for the cruiser (3 spaces):"
   print ">"
-  player_placement = gets.chomp
-  placement =  @player.string_placement_to_array(player_placement)
-  @player.place_on_board(@cruiser_p, @board_player, placement)
+  @player.string_placement_to_array
+  @player.place_on_board(@cruiser_p, @board_player)
   puts @board_player.render(true)
   puts "Enter the squares for the submarine (2 spaces):"
   print ">"
-  player_placement = gets.chomp
-  placement =  @player.string_placement_to_array(player_placement)
-  @player.place_on_board(@submarine_p, @board_player, placement)
+  @player.string_placement_to_array
+  @player.place_on_board(@submarine_p, @board_player)
   # start turns
   take_turns
 end
@@ -124,7 +122,7 @@ def game_over_sequence
   elsif ships_all_sunk(@all_ships_p)
     puts "I won ya bozo!"
   end
-  start 
+  start
 end
 
 

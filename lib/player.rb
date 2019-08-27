@@ -5,28 +5,24 @@ class Player
     @shots_taken = []
   end
 
-  def string_placement_to_array(placement_string)
-    placement = placement_string.split(" ")
+  def string_placement_to_array
+    @placement = gets.chomp.upcase.split(" ")
   end
 
-  def place_on_board(ship, board, placement)
-    placed = false
+  def place_on_board(ship, board)
     # generated_placement = all_possible_placements(board, ship).sample
-    until board.valid_placement?(ship, placement) do
+    until board.valid_placement?(ship, @placement) do
       puts "That is not a valid placement! Try again."
       print ">"
-      placement_string = gets.chomp
-      placement = string_placement_to_array(placement_string)
+      string_placement_to_array
     end
-    placed = true
-    board.place(ship, placement)
-    placed = true
-    puts "You've placed your ship. Good luck."
+    board.place(ship, @placement)
+    puts "You've placed your #{ship.name}."
 
   end
 
   def shot_on_board(shot, board)
-    if !board.cells.keys.include?(shot)
+    if !board.cells.keys.include?(shot.upcase)
       puts "Please enter a valid coordinate:"
       return false
     end
@@ -42,10 +38,10 @@ class Player
   end
 
   def take_shot(board)
-    shot = gets.chomp #moved from runner into method
+    shot = gets.chomp.upcase #moved from runner into method
     until shot_on_board(shot, board) && !shot_already_taken?(shot) do
       print ">"
-      shot = gets.chomp
+      shot = gets.chomp.upcase
     end
     @shots_taken << shot
     board.cells[shot].fire_upon
