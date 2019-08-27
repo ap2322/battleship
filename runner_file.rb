@@ -53,8 +53,6 @@ def player_starts
   player_placement = gets.chomp
   placement =  @player.string_placement_to_array(player_placement)
   @player.place_on_board(@submarine_p, @board_player, placement)
-  puts @board_player.render(true)
-
   # start turns
   take_turns
 end
@@ -62,9 +60,8 @@ end
 def ships_all_sunk(ships)
   # helper ships_all_sunk(ships) method, returns boolean
   # can only run this method after ships are placed
-  all_ships_health_arry = ships.map {|ship| ship.health}
-  all_ships_health = all_ships_health_arry.sum
-  all_ships_health == 0
+
+  ships.all? {|ship| ship.health == 0}
 end
 
 def take_turns
@@ -77,7 +74,7 @@ def take_turns
 end
 
 def turn
-    puts "=============COMPUTER BOARD============="
+  puts "=============COMPUTER BOARD============="
   puts @board_comp.render
   puts "==============PLAYER BOARD=============="
   puts @board_player.render(true)
@@ -95,7 +92,7 @@ end
 def player_results(player_shot)
   # if player shot was a hit and ship at cell shot sunk -> "Your shot was a hit, and sunk a #ship"
   if @board_comp.cells[player_shot].render == "X"
-    puts "Your shot at #{player_shot} was a hit, and sunk #{@board_comp.cells[player_shot].ship.name}."
+    puts "Your shot at #{player_shot} was a hit, and sunk my #{@board_comp.cells[player_shot].ship.name}."
   # if player shot miss -> "Your shot on #{player_shot} was a miss."
   elsif @board_comp.cells[player_shot].render == "M"
     puts "Your shot at #{player_shot} was a miss."
@@ -110,17 +107,25 @@ end
 def comp_results(comp_shot)
 
   if @board_player.cells[comp_shot].render == "X"
-    puts "Computer's shot at #{comp_shot} was a hit, and sunk #{@board_player.cells[comp_shot].ship.name}."
+    puts "My shot at #{comp_shot} was a hit, and sunk your #{@board_player.cells[comp_shot].ship.name}."
   # if player shot miss -> "Your shot on #{player_shot} was a miss."
   elsif @board_player.cells[comp_shot].render == "M"
-    puts "Computer's shot at #{comp_shot} was a miss."
+    puts "My shot at #{comp_shot} was a miss."
   # if comp shot was a hit -> "Your shot on comp shot was a hit"
   elsif @board_player.cells[comp_shot].render == "H"
-    puts "Computer's shot at #{comp_shot} was a hit."
+    puts "My shot at #{comp_shot} was a hit."
   end
   # binding.pry
 end
 
+def game_over_sequence
+  if ships_all_sunk(@all_ships_c)
+    puts "You won!"
+  elsif ships_all_sunk(@all_ships_p)
+    puts "I won ya bozo!"
+  end
+  start 
+end
 
 
 start
