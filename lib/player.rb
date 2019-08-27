@@ -1,4 +1,5 @@
 class Player
+  attr_reader :shots_taken
 
   def initialize
     @shots_taken = []
@@ -40,7 +41,8 @@ class Player
     false
   end
 
-  def take_shot(shot, board)
+  def take_shot(board)
+    shot = gets.chomp #moved from runner into method
     until shot_on_board(shot, board) && !shot_already_taken?(shot) do
       print ">"
       shot = gets.chomp
