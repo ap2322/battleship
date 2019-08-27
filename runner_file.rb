@@ -16,7 +16,9 @@ def start
       player_starts
     elsif p_or_q.downcase == "q"
       abort "Goodbye"
-    else "Please enter p or q."
+    else
+      puts "Please enter p or q."
+      p_or_q = gets.chomp
     end
 end
 
@@ -98,12 +100,12 @@ def turn
 end
 
 def computer_shot_decisions #all shots after the first for the computer
-  binding.pry
+  # binding.pry
   if @result.last == "H"
     @comp1.take_smart_shot(@board_player)
   elsif @result.length < 4 && @result.include?("H") && @result.last != "X" #error include? nil
     @comp1.take_smart_shot(@board_player)
-  elsif @result[-4..-1].include?("H") && @result.last != "X"
+  elsif @result.length >= 4 && @result.last != "X" && @result[-4..-1].include?("H")
     @comp1.take_smart_shot(@board_player)
   else
     @comp1.take_shot(@board_player)
