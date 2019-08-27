@@ -1,4 +1,5 @@
 class Player
+  attr_reader :shots_taken
 
   def initialize
     @shots_taken = []
@@ -25,11 +26,11 @@ class Player
   end
 
   def shot_on_board(shot, board)
-    if board.cells.keys.include?(shot)
+    if !board.cells.keys.include?(shot)
       puts "Please enter a valid coordinate:"
-      return true
+      return false
     end
-    false
+    true
   end
 
   def shot_already_taken?(shot)
@@ -40,14 +41,15 @@ class Player
     false
   end
 
-  def take_shot(shot, board)
+  def take_shot(board)
+    shot = gets.chomp #moved from runner into method
     until shot_on_board(shot, board) && !shot_already_taken?(shot) do
       print ">"
       shot = gets.chomp
     end
     @shots_taken << shot
     board.cells[shot].fire_upon
-    binding.pry
+    # binding.pry
   end
 
 

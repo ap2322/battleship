@@ -16,43 +16,53 @@ class ComputerTest < Minitest::Test
     @cruiser = Ship.new("Cruiser", 3)
     @submarine = Ship.new("Submarine", 2)
     @player = Player.new
-    binding.pry
   end
 
   def test_it_exists
     assert_instance_of Computer, @comp1
   end
 
-  # def test_place_cruiser
-  #   random_placement = @board.cells.keys.each_cons(@cruiser.length)
-  #   binding.pry
-  #   assert_equal random_placement, @comp1.generate_placement
-  # end
+  def test_random_placements
+    all_placements_for_cruiser = @comp1.all_possible_placements(@board, @cruiser)
+    all_placements_for_sub = @comp1.all_possible_placements(@board, @submarine)
 
-  def test_invalid_until_valid_placement
-    # ship is not placed on board with zero sample placements
-    # ship is still not placed on board with an invalid placement
-    # ship is placed on board with valid placement
+    assert_equal @cruiser.length, all_placements_for_cruiser.first.length
+    assert_equal @submarine.length, all_placements_for_sub.first.length
 
   end
 
-  def test_all_possible_placements
-     expected = [["A1", "A2", "A3"],
-["A2", "A3", "A4"],
-["A3", "A4", "B1"],
-["A4", "B1", "B2"],
-["B1", "B2", "B3"],
-["B2", "B3", "B4"],
-["B3", "B4", "C1"],
-["B4", "C1", "C2"],
-["C1", "C2", "C3"],
-["C2", "C3", "C4"],
-["C3", "C4", "D1"],
-["C4", "D1", "D2"],
-["D1", "D2", "D3"],
-["D2", "D3", "D4"]]
+  def test_place_cruiser
+    @comp1.place_on_board(@cruiser, @board)
+    cell_with_ship_on_board = @board.cells.values.find {|cell| cell.ship == @cruiser}
 
-assert_equal expected, @comp1.all_possible_placements(@board, @cruiser)
+    assert_equal false, cell_with_ship_on_board.empty?
+  end
+
+  def test_not_placed
+    # ship is not placed on board with zero sample placements
+    cell_with_ship_on_board = nil
+    cell_with_ship_on_board = @board.cells.values.find {|cell| cell.ship == @cruiser}
+
+    assert_nil cell_with_ship_on_board
+  end
+
+  def test_all_possible_placements
+     expected = [ ["A1", "A2", "A3"],
+                  ["A2", "A3", "A4"],
+                  ["A3", "A4", "B1"],
+                  ["A4", "B1", "B2"],
+                  ["B1", "B2", "B3"],
+                  ["B2", "B3", "B4"],
+                  ["B3", "B4", "C1"],
+                  ["B4", "C1", "C2"],
+                  ["C1", "C2", "C3"],
+                  ["C2", "C3", "C4"],
+                  ["C3", "C4", "D1"],
+                  ["C4", "D1", "D2"],
+                  ["D1", "D2", "D3"],
+                  ["D2", "D3", "D4"]]
+
+    assert_equal expected, @comp1.all_possible_placements(@board, @cruiser)
 
   end
 
