@@ -38,6 +38,7 @@ end
 
 def player_starts
   @player = Player.new
+  puts "==============PLAYER TURN=============="
   puts "You now need to lay out your two ships."
   puts "The Cruiser is three units long and the Submarine is two units long."
   puts @board_player.render
@@ -71,10 +72,11 @@ def turns
   @player.take_shot(shot, @board_comp)
   # computer takes shot
   @comp1.take_shot(@board_player)
-  binding.pry
+  # binding.pry
   # puts results of turn
   player_results(shot)
   comp_results(@comp1.shots_taken.last)
+  # binding.pry
 end
 
 def player_results(player_shot)
@@ -82,24 +84,30 @@ def player_results(player_shot)
   if @board_comp.cells[player_shot].render == "X"
     puts "Your shot at #{player_shot} was a hit, and sunk #{@board_comp.cells[player_shot].ship.name}."
   # if player shot miss -> "Your shot on #{player_shot} was a miss."
-  elsif @board_comp.cells[player_shot].render == "."
+elsif @board_comp.cells[player_shot].render == "M"
     puts "Your shot at #{player_shot} was a miss."
   # if player shot was a hit -> "Your shot on player shot was a hit"
   elsif @board_comp.cells[player_shot].render == "H"
     puts "Your shot at #{player_shot} was a hit."
   end
+  puts "=============COMPUTER BOARD============="
+  puts @board_comp.render
 end
 
 def comp_results(comp_shot)
+
   if @board_player.cells[comp_shot].render == "X"
-    puts "My shot at #{comp_shot} was a hit, and sunk #{@board_player.cells[comp_shot].ship.name}."
+    puts "Computer's shot at #{comp_shot} was a hit, and sunk #{@board_player.cells[comp_shot].ship.name}."
   # if player shot miss -> "Your shot on #{player_shot} was a miss."
-  elsif @board_player.cells[comp_shot].render == "."
-    puts "My shot at #{comp_shot} was a miss."
+elsif @board_player.cells[comp_shot].render == "M"
+    puts "Computer's shot at #{comp_shot} was a miss."
   # if comp shot was a hit -> "Your shot on comp shot was a hit"
   elsif @board_player.cells[comp_shot].render == "H"
-    puts "My shot at #{comp_shot} was a hit."
+    puts "Computer's shot at #{comp_shot} was a hit."
   end
+  puts "==============PLAYER BOARD=============="
+  puts @board_player.render(true)
+  # binding.pry
 end
 
 start
