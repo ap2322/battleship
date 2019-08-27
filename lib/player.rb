@@ -7,6 +7,7 @@ class Player
 
   def string_placement_to_array
     @placement = gets.chomp.upcase.split(" ")
+    @placement.sort!
   end
 
   def place_on_board(ship, board)

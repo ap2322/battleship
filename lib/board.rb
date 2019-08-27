@@ -119,7 +119,7 @@ class Board
   end
 
   def top_row_render
-    board_string = ""
+    board_string = " "
     range = @cells.keys.map {|coord| coord[1]}
     range.uniq!
     range.each do |num|

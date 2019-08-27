@@ -21,22 +21,23 @@ class PlayerTest < Minitest::Test
   end
 
   def test_player_exists
-
     assert_instance_of Player, @player
   end
 
-  # def test_string_to_array
-  #   input_string = "A1 A2 A3"
-  #   input2 = "b1 c1"
-  #
-  #   assert_equal ["A1", "A2", "A3"], @player.string_placement_to_array(input_string)
-  #   assert_equal ["B1", "C1"], @player.string_placement_to_array(input2)
-  # end
+  def test_string_to_array_ruby_methods
+    # not a real test, but confirming output of string.upcase.split(" ")
+    input_string = "A1 A2 A3"
+    input2 = "b1 c1"
+
+    assert_equal ["A1", "A2", "A3"], input_string.upcase.split(" ")
+    assert_equal ["B1", "C1"], input2.upcase.split(" ")
+  end
 
   def test_place_player_ship
-    @player.place_on_board(@cruiser, @board_user, ["A2", "A3", "A4"])
-    binding.pry
-    @player.place_on_board(@submarine, @board_user, ["b1", "c1"])
+    @placement = ["A1", "A2", "A3"]
+    @player.place_on_board(@cruiser, @board_user)
+    @placement = ["B1", "B2"]
+    @player.place_on_board(@submarine, @board_user)
 
     assert_equal @cruiser, @board_user.cells["A2"].ship
     assert_equal @submarine, @board_user.cells["B1"].ship

@@ -52,13 +52,15 @@ def player_starts
   @player.string_placement_to_array
   @player.place_on_board(@submarine_p, @board_player)
   # start turns
+  puts "\n +++++++++++++++++++++++++++++++++\n"
+  puts "All ships are on the board. Good luck.\n"
+
   take_turns
 end
 
 def ships_all_sunk(ships)
   # helper ships_all_sunk(ships) method, returns boolean
   # can only run this method after ships are placed
-
   ships.all? {|ship| ship.health == 0}
 end
 
@@ -68,6 +70,7 @@ def take_turns
   until ships_all_sunk(@all_ships_c) || ships_all_sunk(@all_ships_p)
     turn
   end
+
   game_over_sequence
 end
 
@@ -83,8 +86,10 @@ def turn
   # computer takes shot
   @comp1.take_shot(@board_player)
   # puts results of turn
+  puts "\n "
   player_results(@player.shots_taken.last)
   comp_results(@comp1.shots_taken.last)
+  puts "\n"
 end
 
 def player_results(player_shot)
@@ -99,8 +104,8 @@ def player_results(player_shot)
     puts "Your shot at #{player_shot} was a hit."
   end
 end
-# make one results(shot, board)
-#
+# make one results(player, shot, board)
+# who =
 
 def comp_results(comp_shot)
 
@@ -117,11 +122,13 @@ def comp_results(comp_shot)
 end
 
 def game_over_sequence
+  puts "\n==============GAME OVER=============="
   if ships_all_sunk(@all_ships_c)
     puts "You won!"
   elsif ships_all_sunk(@all_ships_p)
     puts "I won ya bozo!"
   end
+  puts "\n\n"
   start
 end
 
