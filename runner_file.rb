@@ -68,6 +68,8 @@ def ships_all_sunk(ships)
 end
 
 def take_turns
+  # Repeats <show board> <take shots> <show result>
+  # until either the computer's ships are sunk or the player's ships are sunk
   until ships_all_sunk(@all_ships_c) || ships_all_sunk(@all_ships_p)
     turn
   end
@@ -75,9 +77,7 @@ def take_turns
 end
 
 def turn
-  # TODO add until loop that repeats <show board> <take shots> <show result>
-  # until either the computer's ships are sunk or the player's ships are sunk
-  puts "=============COMPUTER BOARD============="
+    puts "=============COMPUTER BOARD============="
   puts @board_comp.render
   puts "==============PLAYER BOARD=============="
   puts @board_player.render(true)
