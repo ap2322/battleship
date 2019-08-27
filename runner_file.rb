@@ -84,12 +84,30 @@ def turn
   # shot = gets.chomp
   @player.take_shot(@board_comp)
   # computer takes shot
-  @comp1.take_shot(@board_player)
+  if @comp1.shots_taken.length != 0
+    computer_shot_decisions
+  else
+    @comp1.take_shot(@board_player)
+  end
+
   # puts results of turn
   puts "\n "
   player_results(@player.shots_taken.last)
   comp_results(@comp1.shots_taken.last)
   puts "\n"
+end
+
+def computer_shot_decisions #all shots after the first for the computer
+  binding.pry
+  if @result.last == "H"
+    @comp1.take_smart_shot(@board_player)
+  elsif @result.length < 4 && @result.include?("H") && @result.last != "X" #error include? nil
+    @comp1.take_smart_shot(@board_player)
+  elsif @result[-4..-1].include?("H") && @result.last != "X"
+    @comp1.take_smart_shot(@board_player)
+  else
+    @comp1.take_shot(@board_player)
+  end
 end
 
 def player_results(player_shot)
@@ -108,17 +126,21 @@ end
 # who =
 
 def comp_results(comp_shot)
-
+  @result = []
   if @board_player.cells[comp_shot].render == "X"
+    @result << "X"
     puts "My shot at #{comp_shot} was a hit, and sunk your #{@board_player.cells[comp_shot].ship.name}."
   # if player shot miss -> "Your shot on #{player_shot} was a miss."
   elsif @board_player.cells[comp_shot].render == "M"
+    @result << "M"
     puts "My shot at #{comp_shot} was a miss."
   # if comp shot was a hit -> "Your shot on comp shot was a hit"
   elsif @board_player.cells[comp_shot].render == "H"
+    @result << "H"
     puts "My shot at #{comp_shot} was a hit."
   end
   # binding.pry
+  @result
 end
 
 def game_over_sequence

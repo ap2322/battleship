@@ -44,4 +44,33 @@ class Computer
     board.cells[generate_shot(board)].fire_upon
   end
 
+  def make_smart_hits_available(board, hit_coord = @shots_taken.last)
+    l = hit_coord[0]
+    num = hit_coord[1].to_i
+
+    sh_1 = l + num.next.to_s
+    sh_2 = l + num.pred.to_s
+    sh_3 = l.next + num.to_s
+    sh_4 = l.ord.pred.chr + num.to_s
+
+    smart_hits = [sh_1, sh_2, sh_3, sh_4]
+    smart_hits & board.cells.keys
+  end
+
+  def make_smart_shot(board)
+    smart_shot = make_smart_hits_available(board).sample
+    while @shots_taken.include?(smart_shot)
+      smart_shot = make_smart_hits_available(board).sample
+    end
+    @shots_taken << smart_shot
+    smart_shot
+
+  end
+
+  def take_smart_shot(board)
+    # hit_coord #starting coordinate
+    # make_smart_hits_available(board, hit_coord)
+    board.cells[make_smart_shot(board)].fire_upon
+  end
+
 end
