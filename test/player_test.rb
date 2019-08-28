@@ -52,7 +52,7 @@ class PlayerTest < Minitest::Test
   # end
 
   def test_shot_on_board
-    assert_equal false, @player.shot_on_board("A5", @board_comp)
+    assert_equal false, @player.shot_on_board("A11", @board_comp)
     assert_equal true, @player.shot_on_board("B1", @board_comp)
   end
 

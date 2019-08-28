@@ -2,21 +2,32 @@ class Board
   attr_reader :cells
 
   def initialize
-    @cells = make_board
+    @cells = make_new_board
   end
 
-  def make_board
-    cells_hash = Hash.new
-    keys = [
-      "A1", "A2", "A3", "A4",
-      "B1", "B2", "B3", "B4",
-      "C1", "C2", "C3", "C4",
-      "D1", "D2", "D3", "D4",
-    ]
-    keys.each do |key|
-      cells_hash[key] = Cell.new(key)
-    end
-    cells_hash
+  # def make_board
+  #   cells_hash = Hash.new
+  #   keys = [
+  #     "A1", "A2", "A3", "A4",
+  #     "B1", "B2", "B3", "B4",
+  #     "C1", "C2", "C3", "C4",
+  #     "D1", "D2", "D3", "D4",
+  #   ]
+  #   keys.each do |key|
+  #     cells_hash[key] = Cell.new(key)
+  #   end
+  #   cells_hash
+  # end
+
+  def make_new_board
+    @cells = {}
+      ("A".."J").each do |letter|
+        (1..10).each do |number|
+          coordinates = "#{letter}#{number}"
+          @cells[coordinates] = Cell.new(coordinates)
+        end
+      end
+    @cells
   end
 
 #If letters are all equal and numbers must be consecutive
