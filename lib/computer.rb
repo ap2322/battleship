@@ -33,10 +33,10 @@ class Computer
 
   def generate_shot(board)
     comp_shot = board.cells.keys.sample
-    while @shots_taken.include?(comp_shot)
+    while shots_taken.include?(comp_shot)
       comp_shot = board.cells.keys.sample
     end
-    @shots_taken << comp_shot
+    shots_taken << comp_shot
     comp_shot
   end
 
@@ -45,22 +45,22 @@ class Computer
   end
 
   def shots_rendered(board)
-    @shots_taken.map do |shot|
+    shots_taken.map do |shot|
       board.cells[shot].render
     end
   end
 
   def shots_rendered_hash(board)
     h = Hash.new
-    @shots_taken.each do |shot|
-      h[shot] = shots_rendered[@shots_taken.index(shot)]
+    shots_taken.each do |shot|
+      h[shot] = shots_rendered(board)[shots_taken.index(shot)]
     end
      last_hits = h.find_all {|key, value| value == "H"}
-     binding.pry
+     last_hits.last
   end
 
   def last_hit_coordinate(board)
-    @hit_coord = shots_rendered(board).last[0]
+    @hit_coord = shots_rendered_hash(board)[0]
   end
 
   def make_smart_hits_available(board, hit_coord = @hit_coord)
@@ -78,10 +78,10 @@ class Computer
 
   def make_smart_shot(board)
     smart_shot = make_smart_hits_available(board).sample
-    while @shots_taken.include?(smart_shot)
+    while shots_taken.include?(smart_shot)
       smart_shot = make_smart_hits_available(board).sample
     end
-    @shots_taken << smart_shot
+    shots_taken << smart_shot
     smart_shot
 
   end
