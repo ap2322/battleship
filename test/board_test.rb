@@ -17,6 +17,18 @@ class BoardTest < Minitest::Test
     assert_instance_of Board, @board
   end
 
+  # def test_make_keys
+  #   expected = [
+  #     "A1", "A2", "A3", "A4",
+  #     "B1", "B2", "B3", "B4",
+  #     "C1", "C2", "C3", "C4",
+  #     "D1", "D2", "D3", "D4"
+  #   ]
+  #
+  #   assert_equal expected, @board.make_keys
+  #
+  # end
+
   def test_cells_is_hash_of_Cells
 
     assert_instance_of Hash, @board.cells
@@ -32,6 +44,17 @@ class BoardTest < Minitest::Test
     ]
 
     assert_equal keys, @board.cells.keys
+
+    # board2 = Board.new(5, 5)
+    # keys2 = [
+    #   "A1", "A2", "A3", "A4", "A5",
+    #   "B1", "B2", "B3", "B4", "B5",
+    #   "C1", "C2", "C3", "C4", "C5",
+    #   "D1", "D2", "D3", "D4", "D5",
+    #   "E1", "E2", "E3", "E4", "E5"
+    # ]
+    #
+    # assert_equal keys2, board2.cells.keys
   end
 
   def test_valid_placement_length
@@ -52,6 +75,8 @@ class BoardTest < Minitest::Test
 
     assert_equal [[1, 2, 3], [2, 3, 4]], @board.num_coordinates_possible(range, length)
     assert_equal expected, @board.num_coordinates_possible(range, length_2)
+
+
   end
 
   def test_chosen_coord_numbers_are_in_possilbe_coordinates
@@ -196,4 +221,17 @@ class BoardTest < Minitest::Test
     assert_equal expected_board_string, @board.render
     assert_equal expected_show_true, @board.render(true)
   end
+
+  # def test_render_custom_board
+  #   board2 = Board.new(6, 6)
+  #   expected_board_string = "  1 2 3 4 5 6 \n" +
+  #                         "A . . . . . . \n" +
+  #                         "B . . . . . . \n" +
+  #                         "C . . . . . . \n" +
+  #                         "D . . . . . . \n" +
+  #                         "E . . . . . . \n" +
+  #                         "F . . . . . . \n"
+  #
+  #   assert_equal expected_board_string, board2.render
+  # end
 end
