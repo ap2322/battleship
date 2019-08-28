@@ -44,7 +44,26 @@ class Computer
     board.cells[generate_shot(board)].fire_upon
   end
 
-  def make_smart_hits_available(board, hit_coord = @shots_taken.last)
+  def shots_rendered(board)
+    @shots_taken.map do |shot|
+      board.cells[shot].render
+    end
+  end
+
+  def shots_rendered_hash(board)
+    h = Hash.new
+    @shots_taken.each do |shot|
+      h[shot] = shots_rendered[@shots_taken.index(shot)]
+    end
+     last_hits = h.find_all {|key, value| value == "H"}
+     binding.pry
+  end
+
+  def last_hit_coordinate(board)
+    @hit_coord = shots_rendered(board).last[0]
+  end
+
+  def make_smart_hits_available(board, hit_coord = @hit_coord)
     l = hit_coord[0]
     num = hit_coord[1].to_i
 
@@ -68,8 +87,7 @@ class Computer
   end
 
   def take_smart_shot(board)
-    # hit_coord #starting coordinate
-    # make_smart_hits_available(board, hit_coord)
+    last_hit_coordinate(board)
     board.cells[make_smart_shot(board)].fire_upon
   end
 
