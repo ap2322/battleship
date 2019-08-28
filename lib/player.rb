@@ -10,17 +10,15 @@ class Player
     @placement.sort!
   end
 
-  def place_on_board(ship, board, placement = @placement)
-    # generated_placement = all_possible_placements(board, ship).sample
-    until board.valid_placement?(ship, placement) do
-      puts "That is not a valid placement! Try again."
-      print ">"
-      string_placement_to_array
-    end
-    board.place(ship, placement)
-    puts "You've placed your #{ship.name}."
-
-  end
+  def place_on_board(ship, board)
+     until board.valid_placement?(ship, @placement) do
+       puts "That is not a valid placement! Try again."
+       print ">"
+       string_placement_to_array
+     end
+     board.place(ship, @placement)
+     puts "You've placed your #{ship.name}."
+   end
 
   def shot_on_board(shot, board)
     if !board.cells.keys.include?(shot.upcase)
