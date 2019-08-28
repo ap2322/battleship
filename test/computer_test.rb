@@ -73,14 +73,10 @@ class ComputerTest < Minitest::Test
   # end
 
   def test_smart_shot
-    @board.place(@cruiser, ["A1", "A2", "A3"])
-    @board.place(@submarine, ["C2", "D2"])
-
     @comp1.take_shot(@board)
     @comp1.take_shot(@board)
-    binding.pry
 
-    assert_equal [".", "."], @comp1.shots_rendered(@board)
+    assert_equal ["M", "M"], @comp1.shots_rendered(@board)
 
   end
 
