@@ -66,6 +66,18 @@ class ComputerTest < Minitest::Test
 
   end
 
+  # def test_shots_rendered_hash
+  #   @shots_taken = ["C2", "B1"]
+  #
+  #   assert_equal [".", "."], @comp1.shots_rendered(@board)
+  # end
 
+  def test_smart_shot
+    @comp1.take_shot(@board)
+    @comp1.take_shot(@board)
+
+    assert_equal ["M", "M"], @comp1.shots_rendered(@board)
+
+  end
 
 end
