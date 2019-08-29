@@ -18,7 +18,7 @@ class Player
      end
      board.place(ship, @placement)
      puts "You've placed your #{ship.name}."
-   end
+  end
 
   def shot_on_board(shot, board)
     if !board.cells.keys.include?(shot.upcase)

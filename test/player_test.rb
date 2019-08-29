@@ -3,7 +3,6 @@ require 'minitest/pride'
 require './lib/ship'
 require './lib/cell'
 require './lib/board'
-# require '../runner_file'
 require './lib/computer'
 require './lib/player'
 require 'pry'
@@ -32,24 +31,6 @@ class PlayerTest < Minitest::Test
     assert_equal ["A1", "A2", "A3"], input_string.upcase.split(" ")
     assert_equal ["B1", "C1"], input2.upcase.split(" ")
   end
-
-  # def test_place_player_ship
-  #   @placement1 = ["A1", "A2", "A3"]
-  #   @player.place_on_board(@cruiser, @board_user)
-  #   @placement2 = ["B1", "B2"]
-  #   @player.place_on_board(@submarine, @board_user)
-  #
-  #   assert_equal @cruiser, @board_user.cells["A2"].ship
-  #   assert_equal @submarine, @board_user.cells["B1"].ship
-  # end
-
-  # def test_take_shot
-  #   @board_comp.place(@cruiser, ["A1", "A2", "A3"])
-  #   @player.take_shot(@board_comp) #input "A1"
-  #
-  #   assert_equal true, @board_comp.cells["A1"].fired_upon?
-  #   assert_equal false, @board_comp.cells["B1"].fired_upon?
-  # end
 
   def test_shot_on_board
     assert_equal false, @player.shot_on_board("A5", @board_comp)
