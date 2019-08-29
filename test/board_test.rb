@@ -17,18 +17,6 @@ class BoardTest < Minitest::Test
     assert_instance_of Board, @board
   end
 
-  # def test_make_keys
-  #   expected = [
-  #     "A1", "A2", "A3", "A4",
-  #     "B1", "B2", "B3", "B4",
-  #     "C1", "C2", "C3", "C4",
-  #     "D1", "D2", "D3", "D4"
-  #   ]
-  #
-  #   assert_equal expected, @board.make_keys
-  #
-  # end
-
   def test_cells_is_hash_of_Cells
 
     assert_instance_of Hash, @board.cells
@@ -64,7 +52,7 @@ class BoardTest < Minitest::Test
   end
 
   def test_same_letter_make_array_of_numbers
-    assert_equal [1, 2, 3], @board.numbers_in_placement_same_letter(["A1", "A2", "A3"])
+    assert_equal [1, 2, 3], @board.horizontal(["A1", "A2", "A3"])
   end
 
   def test_possible_placements_same_letter
@@ -84,7 +72,7 @@ class BoardTest < Minitest::Test
     length = 3
     chosen_coords = ["A2", "A3", "A4"]
 
-    assert_equal true, @board.same_letter_num_ok?(chosen_coords, range, length)
+    assert_equal true, @board.horizontal_ok?(chosen_coords, range, length)
   end
 
   def test_same_letter_coords
@@ -111,11 +99,11 @@ class BoardTest < Minitest::Test
     assert_equal false, @board.same_number_coords?(chosen_coords2)
   end
 
-  def test_letters_in_placement_same_number
+  def test_vertical
     chosen_coords = ["A2", "B2", "C2"]
     expected_ordinal_array = [65, 66, 67]
 
-    assert_equal expected_ordinal_array, @board.letters_in_placement_same_number(chosen_coords)
+    assert_equal expected_ordinal_array, @board.vertical(chosen_coords)
   end
 
   def test_possible_letter_coordinates_in_ordinal_values
@@ -134,7 +122,7 @@ class BoardTest < Minitest::Test
     length = 3
     chosen_coords = ["A2", "B2", "C2"]
 
-    assert_equal true, @board.same_num_letters_ok?(chosen_coords, range, length)
+    assert_equal true, @board.vertical_ok?(chosen_coords, range, length)
   end
 
   def test_valid_placement_same_number_and_helper_methods
@@ -221,17 +209,4 @@ class BoardTest < Minitest::Test
     assert_equal expected_board_string, @board.render
     assert_equal expected_show_true, @board.render(true)
   end
-
-  # def test_render_custom_board
-  #   board2 = Board.new(6, 6)
-  #   expected_board_string = "  1 2 3 4 5 6 \n" +
-  #                         "A . . . . . . \n" +
-  #                         "B . . . . . . \n" +
-  #                         "C . . . . . . \n" +
-  #                         "D . . . . . . \n" +
-  #                         "E . . . . . . \n" +
-  #                         "F . . . . . . \n"
-  #
-  #   assert_equal expected_board_string, board2.render
-  # end
 end

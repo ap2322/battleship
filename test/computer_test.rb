@@ -3,7 +3,6 @@ require 'minitest/pride'
 require './lib/ship'
 require './lib/cell'
 require './lib/board'
-# require './lib/runner_file'
 require './lib/computer'
 require './lib/player'
 require 'pry'
@@ -65,12 +64,6 @@ class ComputerTest < Minitest::Test
     assert_equal expected, @comp1.all_possible_placements(@board, @cruiser)
 
   end
-
-  # def test_shots_rendered_hash
-  #   @shots_taken = ["C2", "B1"]
-  #
-  #   assert_equal [".", "."], @comp1.shots_rendered(@board)
-  # end
 
   def test_smart_shot
     @comp1.take_shot(@board)

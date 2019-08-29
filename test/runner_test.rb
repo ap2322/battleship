@@ -7,10 +7,4 @@ require './runner_file'
 
 class RunnerTest < Minitest::Test
 
-def test_start
-  assert_equal
-end
-
-
-
 end

@@ -27,8 +27,8 @@ class Board
     letters.uniq.length == 1
   end
 
-  def numbers_in_placement_same_letter(coordinates)
-    placement_nums = coordinates.map do |coord|
+  def horizontal(coordinates)
+    coordinates.map do |coord|
       coord[1].to_i
     end
   end
@@ -41,9 +41,9 @@ class Board
     valid_segment
   end
 
-  def same_letter_num_ok?(coordinates, range = (1..4), length)
+  def horizontal_ok?(coordinates, range = (1..4), length)
     num_coordinates_possible(range , length).include?(
-    numbers_in_placement_same_letter(coordinates))
+    horizontal(coordinates))
   end
 
   # If numbers are all equal and letters must be consecutive
@@ -54,15 +54,15 @@ class Board
     numbers.uniq.length == 1
   end
 
-  def letters_in_placement_same_number(coordinates)
-    placement_letters = coordinates.map do |coord|
+  def vertical(coordinates)
+    coordinates.map do |coord|
       coord[0].ord
     end
   end
 
-  def same_num_letters_ok?(coordinates, range = (65..68), length)
+  def vertical_ok?(coordinates, range = (65..68), length)
     letter_coordinates_possible(range , length).include?(
-    letters_in_placement_same_number(coordinates))
+    vertical(coordinates))
   end
 
   def letter_coordinates_possible(range, length)
@@ -80,10 +80,10 @@ class Board
     valid = false
 
     if same_letter_coords?(coordinates) &&
-       same_letter_num_ok?(coordinates, ship.length)
+       horizontal_ok?(coordinates, ship.length)
       valid = true
     elsif same_number_coords?(coordinates) &&
-          same_num_letters_ok?(coordinates, ship.length)
+          vertical_ok?(coordinates, ship.length)
       valid = true
     end
 
@@ -121,7 +121,7 @@ class Board
 
   def top_row_render
     board_string = " "
-    range = @cells.keys.map {|coord| coord[1]}
+    range = cells.keys.map {|coord| coord[1]}
     range.uniq!
     range.each do |num|
       board_string << " #{num}"
@@ -132,8 +132,8 @@ class Board
   def render(show = false)
     board_string = top_row_render
 
-    @cells.each_with_index do |(coord, cell), index|
-      if @cells.keys[index][0] != @cells.keys[index-1][0]
+    cells.each_with_index do |(coord, cell), index|
+      if cells.keys[index][0] != cells.keys[index-1][0]
           board_string << "\n#{coord[0]} "
           # binding.pry
       end
@@ -143,18 +143,4 @@ class Board
     board_string << "\n"
   end
 
-  # Alternate method is use the board size 4x4 and use % to determine when to add "\n"
 end
-
-
-# Think about this when refactoring for variable board size
-  # def size(y, x)
-  #   keys = []
-  #   y.times do |y|
-  #     # keys << y
-  #     x.times do |x|
-  #       keys << x
-  #     end
-  #   end
-  #   keys
-  # end
